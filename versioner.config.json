@@ -26,6 +26,6 @@
         "tagMessage": "Release {version}"
     },
     "semver": false,
-    "changelog": false,
+    "changelog": true,
     "workspaces": null
 }
