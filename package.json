@@ -1,6 +1,6 @@
 {
   "name": "uc8-projeto-mobile",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.ts",
   "dependencies": {
     "expo": "~57.0.21",
@@ -15,6 +15,7 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
+    "tsc": "npx tsc --noEmit",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
