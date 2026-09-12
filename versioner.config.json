@@ -1,0 +1,31 @@
+{
+    "versionFile": ".versioner.json",
+    "files": [
+        {
+            "path": "package.json",
+            "field": "version"
+        },
+        {
+            "path": "app.json",
+            "field": "expo.version"
+        }
+    ],
+    "commit": {
+        "template": "v{version} - {message}",
+        "minLength": 3,
+        "maxLength": 100
+    },
+    "git": {
+        "enabled": true,
+        "addAll": true,
+        "add": true,
+        "commit": true,
+        "push": true,
+        "tag": false,
+        "tagPrefix": "v",
+        "tagMessage": "Release {version}"
+    },
+    "semver": false,
+    "changelog": false,
+    "workspaces": null
+}
