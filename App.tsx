@@ -1,21 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Header from "@/Components/Header";
+import NavigatorStackRoutes from "@/Routes/NavigatorStack.routes";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <Text>Carlos-iso</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	return (
+		<SafeAreaProvider>
+			<NavigationContainer>
+				<Header />
+				<NavigatorStackRoutes />
+			</NavigationContainer>
+		</SafeAreaProvider>
+	);
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

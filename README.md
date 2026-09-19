@@ -31,10 +31,29 @@ Aplicativo mobile da UC8, por Carlos Siqueira. Recorte do sistema Ludora, da UC5
 | `expected_return_date` | `Date` | Data prevista de devolução |
 | `total_price` | `string` | Valor total (NUMERIC retornado como string pelo pg) |
 
+## Navegação
+
+A navegação é um diferencial deste projeto — o professor não abordou o tema na UC8, mas foi implementada com base em experiência de um projeto anterior.
+
+A estrutura usa duas camadas do React Navigation:
+
+- **Stack Navigator** — camada raiz, permite empilhar telas com transição (usado para futuramente adicionar telas de detalhe ou login por cima das tabs)
+- **Bottom Tab Navigator** — camada interna, exibe as três abas principais: Clientes, Jogos e Locações
+
+```
+App
+└── NavigationContainer
+    └── Stack.Navigator
+        └── NavigatorTabs (Tab.Navigator)
+            ├── Customers
+            ├── Games
+            └── Rentals
+```
+
 ## Recorte — Telas
 
 > [!NOTE]
-> A ser adicionado nas próximas versões
+> A ser adicionado nas próximas versões (a partir da v0.0.4)
 
 ## Versionamento
 
@@ -43,9 +62,11 @@ Aplicativo mobile da UC8, por Carlos Siqueira. Recorte do sistema Ludora, da UC5
 | `0.0.0` | Initial commit |
 | `0.0.1` | Add README |
 | `0.0.2` | Add types do recorte |
-| `0.0.3+` | Telas (cada tela = uma versão) |
+| `0.0.3` | Navegação (Stack + Bottom Tabs) e estrutura base das views |
+| `0.0.4+` | Telas (cada tela = uma versão) |
 
 ## Stack
 
 - React Native + Expo
 - TypeScript
+- React Navigation (Stack + Bottom Tabs)

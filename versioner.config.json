@@ -13,7 +13,7 @@
     "commit": {
         "template": "v{version} - {message}",
         "minLength": 3,
-        "maxLength": 100
+        "maxLength": 9999
     },
     "git": {
         "enabled": true,
