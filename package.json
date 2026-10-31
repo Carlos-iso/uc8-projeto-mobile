@@ -1,6 +1,6 @@
 {
   "name": "uc8-projeto-mobile",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "index.ts",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
@@ -24,9 +24,10 @@
   },
   "scripts": {
     "tsc": "npx tsc --noEmit",
-    "start": "expo start",
+    "start": "expo start --android",
+    "reset": "expo start --android --clear",
     "pb": "npx expo prebuild",
-    "and": "expo start --android",
+    "and": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
   },

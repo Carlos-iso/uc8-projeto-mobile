@@ -1,11 +1,16 @@
 {
   "expo": {
-    "name": "uc8-projeto-mobile",
-    "slug": "uc8-projeto-mobile",
-    "version": "0.0.4",
+    "name": "Ludora",
+    "slug": "ludora",
+    "version": "0.0.5",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./src/assets/blank.png",
+      "resizeMode": "contain",
+      "hidden": true
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.carlosdev23.uc8projetomobile"
