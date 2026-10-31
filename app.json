@@ -2,14 +2,14 @@
   "expo": {
     "name": "Ludora",
     "slug": "ludora",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
     "splash": {
-      "image": "./src/assets/blank.png",
+      "image": "./assets/blank.png",
       "resizeMode": "contain",
-      "hidden": true
+      "backgroundColor": "#0b0c10"
     },
     "ios": {
       "supportsTablet": true,

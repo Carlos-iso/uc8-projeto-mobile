@@ -80,7 +80,7 @@ export interface UpdateRentalDto {
 async function request<T>(
   endpoint: string,
   options: RequestInit = {},
-  timeoutMs = 15000
+  timeoutMs = 30000
 ): Promise<T> {
   const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
 
@@ -120,8 +120,9 @@ async function request<T>(
   } catch (err: unknown) {
     clearTimeout(timeoutId);
     if (err instanceof Error) {
-      if (err.name === 'AbortError') {
-        throw new Error('Tempo de requisição esgotado (timeout). A API pode estar acordando.');
+      const msg = err.message || '';
+      if (err.name === 'AbortError' || msg.toLowerCase().includes('cancel')) {
+        throw new Error('A requisição demorou muito para responder (timeout). O servidor pode estar acordando na nuvem.');
       }
       throw err;
     }

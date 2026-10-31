@@ -6,13 +6,8 @@ import Header from "@/Components/Header";
 import NavigatorStackRoutes from "@/Routes/NavigatorStack.routes";
 import SplashScreen from "@/Components/SplashScreen";
 
-// Em modo de build/produção (!__DEV__) ou via variável de ambiente,
-// a tela de espera/splashscreen do React é desativada para entrar direto no app.
-const shouldSkipSplash =
-  !__DEV__ || process.env.EXPO_PUBLIC_DISABLE_SPLASH === "true";
-
 export default function App() {
-  const [isReady, setIsReady] = useState(shouldSkipSplash);
+  const [isReady, setIsReady] = useState(false);
 
   return (
     <SafeAreaProvider>

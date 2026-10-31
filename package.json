@@ -1,6 +1,6 @@
 {
   "name": "uc8-projeto-mobile",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "index.ts",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",

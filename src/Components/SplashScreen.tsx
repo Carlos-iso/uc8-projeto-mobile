@@ -70,7 +70,7 @@ export default function SplashScreen({ onReady }: Props) {
         setStatusText("Conectando ao servidor...");
       }
 
-      const isAlive = await ApiService.checkHealth(6000);
+      const isAlive = await ApiService.checkHealth(10000);
 
       if (!isMounted) return;
 
