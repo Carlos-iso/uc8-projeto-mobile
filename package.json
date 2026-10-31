@@ -1,6 +1,6 @@
 {
   "name": "uc8-projeto-mobile",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "index.ts",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
@@ -28,8 +28,14 @@
     "reset": "expo start --android --clear",
     "pb": "npx expo prebuild",
     "and": "expo run:android",
+    "buildand": "eas build -p android --profile productionand",
     "ios": "expo run:ios",
     "web": "expo start --web"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Carlos-iso/uc8-projeto-mobile.git",
+    "api": "https://github.com/Carlos-iso/uc5-projeto-desktop-api.git"
   },
   "private": true
 }

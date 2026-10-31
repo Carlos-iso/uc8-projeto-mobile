@@ -1,0 +1,38 @@
+{
+  "cli": {
+    "version": ">= 20.5.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "productionand": {
+      "autoIncrement": true,
+      "environment": "production",
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://uc5-projeto-desktop-api.onrender.com"
+      },
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "productionios": {
+      "autoIncrement": true,
+      "environment": "production",
+      "distribution": "internal",
+      "ios": {
+        "simulator": false
+      }
+    }
+  },
+  "submit": {
+    "productionand": {},
+    "productionios": {}
+  }
+}

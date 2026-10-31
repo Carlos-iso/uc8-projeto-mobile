@@ -2,7 +2,7 @@
 
 export const API_BASE_URL =
   process.env.EXPO_PUBLIC_API_URL?.replace(/\/+$/, '') ||
-  'http://localhost:3000';
+  'https://uc5-projeto-desktop-api.onrender.com';
 
 export interface CustomerApi {
   id: string;

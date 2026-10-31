@@ -2,7 +2,7 @@
   "expo": {
     "name": "Ludora",
     "slug": "ludora",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -23,10 +23,16 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
+      "usesCleartextTraffic": true,
       "package": "com.carlosdev23.uc8projetomobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "33f002eb-c678-47c7-8e9d-1211f4af2ee9"
+      }
     }
   }
 }
