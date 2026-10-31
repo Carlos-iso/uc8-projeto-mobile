@@ -52,8 +52,10 @@ App
 
 ## Recorte — Telas
 
-> [!NOTE]
-> A ser adicionado nas próximas versões (a partir da v0.0.4)
+- **Splash Screen** (`SplashScreen.tsx`): Tela de abertura animada com a identidade visual da Ludora. Realiza polling no endpoint `/health` da API e só libera o acesso ao aplicativo quando a API responde com sucesso, com mensagens explicativas para o despertar da nuvem (Render) e botão de retry.
+- **Clientes** (`Customers.tsx`): Listagem completa com busca por nome/CPF/telefone, pull-to-refresh nativo, modal de cadastro e edição de clientes com validação, e exclusão com proteção contra integridade referencial.
+- **Jogos** (`Games.tsx`): Acervo de jogos de tabuleiro com filtros rápidos por status (Todos, Disponíveis, Alugados), busca por nome e categoria, modal de cadastro/edição e cálculo de diária.
+- **Locações** (`Rentals.tsx`): Gestão de aluguéis com dados cruzados (cliente + jogo), datas formatadas de retirada e previsão de devolução, cálculo automático de valor total e ação de devolução rápida que restabelece o jogo como disponível no acervo.
 
 ## Versionamento
 
@@ -63,7 +65,10 @@ App
 | `0.0.1` | Add README |
 | `0.0.2` | Add types do recorte |
 | `0.0.3` | Navegação (Stack + Bottom Tabs) e estrutura base das views |
-| `0.0.4+` | Telas (cada tela = uma versão) |
+| `0.0.4` | SplashScreen com Health Check na API e serviço HTTP `ApiService` |
+| `0.0.5` | Tela de Clientes com CRUD completo e busca |
+| `0.0.6` | Tela de Jogos com CRUD completo, filtros e badges |
+| `0.0.7` | Tela de Locações com dados enriquecidos e fluxo de devolução |
 
 ## Stack
 
