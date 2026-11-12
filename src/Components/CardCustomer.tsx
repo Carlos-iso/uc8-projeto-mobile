@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { CustomerApi } from "@/Services/api";
+import { formatCpf, formatPhone } from "@/Utils/formatters";
 
 type Props = {
   customer: CustomerApi;
@@ -55,13 +56,13 @@ export default function CardCustomer({ customer, onEdit, onDelete }: Props) {
         <View style={styles.infoItem}>
           <Feather name="user-check" size={14} color="#8a8f98" />
           <Text style={styles.infoLabel}>CPF:</Text>
-          <Text style={styles.infoValue}>{customer.cpf}</Text>
+          <Text style={styles.infoValue}>{formatCpf(customer.cpf)}</Text>
         </View>
 
         <View style={styles.infoItem}>
           <Feather name="phone" size={14} color="#8a8f98" />
           <Text style={styles.infoLabel}>Tel:</Text>
-          <Text style={styles.infoValue}>{customer.telefone}</Text>
+          <Text style={styles.infoValue}>{formatPhone(customer.telefone)}</Text>
         </View>
       </View>
     </View>

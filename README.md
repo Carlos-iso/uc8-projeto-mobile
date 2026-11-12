@@ -70,6 +70,13 @@ App
 | `0.0.6` | Tela de Jogos com CRUD completo, filtros e badges |
 | `0.0.7` | Tela de Locações com dados enriquecidos e fluxo de devolução |
 
+## Build e CI/CD (iOS & Android)
+
+- **Android (APK)**: `npm run buildand` (EAS Build com perfil `productionand`)
+- **iOS (.ipa)**: GitHub Action automatizada (`.github/workflows/build-ios.yml`):
+  - **Modo Nativo (macOS Runner)**: Compila o projeto com `xcodebuild` e empacota o `.ipa` (`Ludora.ipa`), disponibilizado para download nos Artefatos do GitHub Actions e em GitHub Releases.
+  - **Modo EAS**: Suporte a build em nuvem com Expo EAS Cloud (`workflow_dispatch`).
+
 ## Stack
 
 - React Native + Expo

@@ -1,6 +1,6 @@
 {
   "name": "uc8-projeto-mobile",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "index.ts",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
@@ -9,6 +9,7 @@
     "@react-navigation/stack": "^7.11.2",
     "expo": "~57.0.21",
     "expo-status-bar": "~57.0.1",
+    "expo-system-ui": "~57.0.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
@@ -24,11 +25,12 @@
   },
   "scripts": {
     "tsc": "npx tsc --noEmit",
-    "start": "expo start --android",
+    "start": "expo start",
     "reset": "expo start --android --clear",
     "pb": "npx expo prebuild",
     "and": "expo run:android",
     "buildand": "eas build -p android --profile productionand",
+    "buildios": "eas build -p ios --profile productionios",
     "ios": "expo run:ios",
     "web": "expo start --web"
   },

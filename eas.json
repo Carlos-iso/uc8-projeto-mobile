@@ -26,6 +26,9 @@
       "autoIncrement": true,
       "environment": "production",
       "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://uc5-projeto-desktop-api.onrender.com"
+      },
       "ios": {
         "simulator": false
       }

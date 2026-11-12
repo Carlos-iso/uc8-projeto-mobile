@@ -50,14 +50,14 @@ export interface UpdateCustomerDto {
 export interface CreateGameDto {
   nome: string;
   categoria: string;
-  valor_diaria: string;
+  valor_diaria: number | string;
   disponivel?: boolean;
 }
 
 export interface UpdateGameDto {
   nome?: string;
   categoria?: string;
-  valor_diaria?: string;
+  valor_diaria?: number | string;
   disponivel?: boolean;
 }
 
@@ -66,7 +66,7 @@ export interface CreateRentalDto {
   id_jogo: string;
   data_retirada: string;
   data_devolucao_prevista: string;
-  valor_total: string;
+  valor_total?: string | number;
 }
 
 export interface UpdateRentalDto {
@@ -74,7 +74,7 @@ export interface UpdateRentalDto {
   id_jogo?: string;
   data_retirada?: string;
   data_devolucao_prevista?: string;
-  valor_total?: string;
+  valor_total?: string | number;
 }
 
 async function request<T>(
@@ -174,16 +174,26 @@ export const ApiService = {
   },
 
   async createGame(data: CreateGameDto): Promise<GameApi> {
+    const payload = {
+      ...data,
+      valor_diaria: Number(data.valor_diaria),
+    };
     return request<GameApi>('/games', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   },
 
   async updateGame(id: string, data: UpdateGameDto): Promise<GameApi> {
+    const payload = {
+      ...data,
+      ...(data.valor_diaria !== undefined
+        ? { valor_diaria: Number(data.valor_diaria) }
+        : {}),
+    };
     return request<GameApi>(`/games/${id}`, {
       method: 'PATCH',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   },
 
@@ -225,9 +235,11 @@ export const ApiService = {
   },
 
   async createRental(data: CreateRentalDto): Promise<RentalApi> {
+    // A API calcula o valor_total internamente e rejeita se for enviado no body
+    const { valor_total, ...payload } = data;
     return request<RentalApi>('/rentals', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   },
 

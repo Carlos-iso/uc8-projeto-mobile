@@ -36,7 +36,7 @@ export default function Rentals() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedCustomerId, setSelectedCustomerId] = useState("");
   const [selectedGameId, setSelectedGameId] = useState("");
-  const [rentalDays, setRentalDays] = useState("3");
+  const [rentalDays, setRentalDays] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   const fetchRentals = useCallback(async () => {
@@ -91,7 +91,7 @@ export default function Rentals() {
       if (availableGame) setSelectedGameId(availableGame.id);
       if (cList.length > 0) setSelectedCustomerId(cList[0].id);
 
-      setRentalDays("3");
+      setRentalDays("");
       setModalVisible(true);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Erro ao abrir formulário";
@@ -103,14 +103,15 @@ export default function Rentals() {
     setModalVisible(false);
     setSelectedCustomerId("");
     setSelectedGameId("");
-    setRentalDays("3");
+    setRentalDays("");
   };
 
   // Cálculo prévio do valor total
   const selectedGame = games.find((g) => g.id === selectedGameId);
-  const daysNum = parseInt(rentalDays, 10) || 1;
-  const calculatedTotal = selectedGame
-    ? (Number(selectedGame.valor_diaria) || 0) * daysNum
+  const parsedDays = parseInt(rentalDays, 10);
+  const isValidDays = !isNaN(parsedDays) && parsedDays > 0;
+  const calculatedTotal = selectedGame && isValidDays
+    ? (Number(selectedGame.valor_diaria) || 0) * parsedDays
     : 0;
 
   const handleCreateRental = async () => {
@@ -124,8 +125,8 @@ export default function Rentals() {
       return;
     }
 
-    if (daysNum <= 0) {
-      Alert.alert("Atenção", "Informe uma quantidade válida de dias de locação.");
+    if (!rentalDays.trim() || !isValidDays) {
+      Alert.alert("Atenção", "Informe uma quantidade válida de dias de locação (maior que zero).");
       return;
     }
 
@@ -133,7 +134,7 @@ export default function Rentals() {
     try {
       const now = new Date();
       const returnDate = new Date();
-      returnDate.setDate(now.getDate() + daysNum);
+      returnDate.setDate(now.getDate() + parsedDays);
 
       const pickupStr = now.toISOString().split("T")[0];
       const returnStr = returnDate.toISOString().split("T")[0];
@@ -143,7 +144,6 @@ export default function Rentals() {
         id_jogo: selectedGameId,
         data_retirada: pickupStr,
         data_devolucao_prevista: returnStr,
-        valor_total: calculatedTotal.toFixed(2),
       });
 
       // Atualiza o jogo para indisponível
@@ -368,7 +368,9 @@ export default function Rentals() {
 
                 <View style={styles.summaryRow}>
                   <Text style={styles.summaryLabel}>Período:</Text>
-                  <Text style={styles.summaryValue}>{daysNum} dia(s)</Text>
+                  <Text style={styles.summaryValue}>
+                    {isValidDays ? `${parsedDays} dia(s)` : "-"}
+                  </Text>
                 </View>
 
                 <View style={styles.summaryDivider} />
@@ -376,10 +378,12 @@ export default function Rentals() {
                 <View style={styles.summaryRow}>
                   <Text style={styles.totalBigLabel}>Valor Total:</Text>
                   <Text style={styles.totalBigValue}>
-                    {calculatedTotal.toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
+                    {isValidDays
+                      ? calculatedTotal.toLocaleString("pt-BR", {
+                          style: "currency",
+                          currency: "BRL",
+                        })
+                      : "R$ 0,00"}
                   </Text>
                 </View>
               </View>

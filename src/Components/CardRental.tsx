@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { RentalWithDetails } from "@/Services/api";
+import { formatCpf } from "@/Utils/formatters";
 
 type Props = {
   rental: RentalWithDetails;
@@ -63,7 +64,7 @@ export default function CardRental({ rental, onReturn }: Props) {
           {rental.cliente_nome || "Cliente sem nome"}
         </Text>
         {rental.cliente_cpf && (
-          <Text style={styles.customerCpf}>• {rental.cliente_cpf}</Text>
+          <Text style={styles.customerCpf}>• {formatCpf(rental.cliente_cpf)}</Text>
         )}
       </View>
 

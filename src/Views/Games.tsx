@@ -15,6 +15,11 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { ApiService, GameApi } from "@/Services/api";
 import CardGame from "@/Components/CardGame";
+import {
+  formatCurrencyInput,
+  formatNumberToCurrencyInput,
+  parseCurrencyInput,
+} from "@/Utils/formatters";
 
 export default function Games() {
   const [games, setGames] = useState<GameApi[]>([]);
@@ -104,7 +109,7 @@ export default function Games() {
     setEditingGame(game);
     setFormNome(game.nome);
     setFormCategoria(game.categoria);
-    setFormValorDiaria(String(game.valor_diaria));
+    setFormValorDiaria(formatNumberToCurrencyInput(game.valor_diaria));
     setFormDisponivel(game.disponivel);
     setModalVisible(true);
   };
@@ -117,14 +122,14 @@ export default function Games() {
   const handleSaveGame = async () => {
     const nome = formNome.trim();
     const categoria = formCategoria.trim();
-    const valorNum = parseFloat(formValorDiaria.replace(",", "."));
+    const valorNum = parseCurrencyInput(formValorDiaria);
 
     if (!nome || !categoria) {
       Alert.alert("Atenção", "Preencha o nome e a categoria do jogo.");
       return;
     }
 
-    if (isNaN(valorNum) || valorNum <= 0) {
+    if (valorNum <= 0) {
       Alert.alert("Atenção", "Informe um valor de diária válido e maior que zero.");
       return;
     }
@@ -135,7 +140,7 @@ export default function Games() {
         await ApiService.updateGame(editingGame.id, {
           nome,
           categoria,
-          valor_diaria: valorNum.toFixed(2),
+          valor_diaria: valorNum,
           disponivel: formDisponivel,
         });
         Alert.alert("Sucesso", "Jogo atualizado com sucesso!");
@@ -143,7 +148,7 @@ export default function Games() {
         await ApiService.createGame({
           nome,
           categoria,
-          valor_diaria: valorNum.toFixed(2),
+          valor_diaria: valorNum,
           disponivel: formDisponivel,
         });
         Alert.alert("Sucesso", "Jogo cadastrado com sucesso!");
@@ -159,6 +164,14 @@ export default function Games() {
   };
 
   const handleDeleteGame = (game: GameApi) => {
+    if (!game.disponivel) {
+      Alert.alert(
+        "Jogo alugado",
+        `O jogo "${game.nome}" está atualmente alugado. Faça a devolução antes de tentar excluí-lo.`
+      );
+      return;
+    }
+
     Alert.alert(
       "Confirmar exclusão",
       `Deseja realmente excluir o jogo "${game.nome}"?`,
@@ -173,10 +186,13 @@ export default function Games() {
               fetchGames();
             } catch (err: unknown) {
               const msg = err instanceof Error ? err.message : String(err);
-              if (/foreign key|violates|constraint/i.test(msg)) {
+              if (
+                /foreign key|violates|constraint|locaç|alug/i.test(msg) ||
+                /internal server error|erro 500/i.test(msg)
+              ) {
                 Alert.alert(
                   "Não é possível excluir",
-                  "Este jogo possui locações registradas no sistema."
+                  `O jogo "${game.nome}" possui histórico de locações registradas no sistema.`
                 );
               } else {
                 Alert.alert("Erro ao excluir", msg);
@@ -345,11 +361,11 @@ export default function Games() {
               <Text style={styles.label}>Valor da Diária (R$) *</Text>
               <TextInput
                 style={styles.input}
-                placeholder="Ex: 25.00"
+                placeholder="0,00"
                 placeholderTextColor="#525866"
                 keyboardType="numeric"
                 value={formValorDiaria}
-                onChangeText={setFormValorDiaria}
+                onChangeText={(text) => setFormValorDiaria(formatCurrencyInput(text))}
               />
 
               <View style={styles.switchRow}>

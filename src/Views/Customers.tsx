@@ -14,6 +14,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { ApiService, CustomerApi } from "@/Services/api";
 import CardCustomer from "@/Components/CardCustomer";
+import { formatCpf, formatPhone, stripNonDigits } from "@/Utils/formatters";
 
 export default function Customers() {
   const [customers, setCustomers] = useState<CustomerApi[]>([]);
@@ -80,8 +81,8 @@ export default function Customers() {
   const handleOpenEditModal = (customer: CustomerApi) => {
     setEditingCustomer(customer);
     setFormNome(customer.nome);
-    setFormCpf(customer.cpf);
-    setFormTelefone(customer.telefone);
+    setFormCpf(formatCpf(customer.cpf));
+    setFormTelefone(formatPhone(customer.telefone));
     setModalVisible(true);
   };
 
@@ -97,6 +98,18 @@ export default function Customers() {
 
     if (!nome || !cpf || !telefone) {
       Alert.alert("Atenção", "Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    const cpfDigits = stripNonDigits(cpf);
+    if (cpfDigits.length !== 11) {
+      Alert.alert("Atenção", "CPF incompleto. Informe os 11 dígitos.");
+      return;
+    }
+
+    const telDigits = stripNonDigits(telefone);
+    if (telDigits.length < 10) {
+      Alert.alert("Atenção", "Telefone incompleto. Informe DDD e número (10 ou 11 dígitos).");
       return;
     }
 
@@ -142,10 +155,13 @@ export default function Customers() {
               fetchCustomers();
             } catch (err: unknown) {
               const msg = err instanceof Error ? err.message : String(err);
-              if (/foreign key|violates|constraint/i.test(msg)) {
+              if (
+                /foreign key|violates|constraint|locaç|alug/i.test(msg) ||
+                /internal server error|erro 500/i.test(msg)
+              ) {
                 Alert.alert(
                   "Não é possível excluir",
-                  "Este cliente possui locações associadas no sistema."
+                  `O cliente "${customer.nome}" possui locações ativas ou registradas no sistema.`
                 );
               } else {
                 Alert.alert("Erro ao excluir", msg);
@@ -259,7 +275,7 @@ export default function Customers() {
                 keyboardType="numeric"
                 maxLength={14}
                 value={formCpf}
-                onChangeText={setFormCpf}
+                onChangeText={(text) => setFormCpf(formatCpf(text))}
               />
 
               <Text style={styles.label}>Telefone *</Text>
@@ -268,8 +284,9 @@ export default function Customers() {
                 placeholder="(00) 00000-0000"
                 placeholderTextColor="#525866"
                 keyboardType="phone-pad"
+                maxLength={15}
                 value={formTelefone}
-                onChangeText={setFormTelefone}
+                onChangeText={(text) => setFormTelefone(formatPhone(text))}
               />
             </View>
 
